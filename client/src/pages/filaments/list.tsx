@@ -27,6 +27,7 @@ import { useLiveify } from "../../components/liveify";
 import { removeUndefined } from "../../utils/filtering";
 import { EntityType, useGetFields } from "../../utils/queryFields";
 import { useNavigate } from "react-router-dom";
+import { useCurrency } from "../../utils/settings";
 import FilamentSelectAndExport from "../../components/export/dialogs/filamentSelectDialog";
 
 dayjs.extend(utc);
@@ -77,6 +78,7 @@ export const FilamentList: React.FC<IResourceComponentsProps> = () => {
   const invalidate = useInvalidate();
   const navigate = useNavigate();
   const extraFields = useGetFields(EntityType.filament);
+  const currency = useCurrency();
 
   const allColumnsWithExtraFields = [...allColumns, ...(extraFields.data?.map((field) => "extra." + field.key) ?? [])];
 
@@ -255,6 +257,14 @@ export const FilamentList: React.FC<IResourceComponentsProps> = () => {
             id: "price",
             i18ncat: "filament",
             width: 80,
+            render: (_, obj: IFilamentCollapsed) => {
+              return obj.price?.toLocaleString(undefined, {
+                style: "currency",
+                currencyDisplay: "narrowSymbol",
+                currency: currency,
+                notation: "compact",
+              });
+            },
           }),
           NumberColumn({
             ...commonProps,
