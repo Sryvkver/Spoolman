@@ -27,6 +27,7 @@ import { useLiveify } from "../../components/liveify";
 import { removeUndefined } from "../../utils/filtering";
 import { EntityType, useGetFields } from "../../utils/queryFields";
 import { useNavigate } from "react-router-dom";
+import FilamentSelectAndExport from "../../components/export/dialogs/filamentSelectDialog";
 
 dayjs.extend(utc);
 
@@ -167,6 +168,7 @@ export const FilamentList: React.FC<IResourceComponentsProps> = () => {
     <List
       headerButtons={({ defaultButtons }) => (
         <>
+          <FilamentSelectAndExport />
           <Button
             type="primary"
             icon={<FilterOutlined />}
